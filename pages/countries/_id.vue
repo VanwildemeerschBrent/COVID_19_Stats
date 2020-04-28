@@ -1,14 +1,15 @@
 <template>
   <div class="country-detail">
-    <p>Country detail {{id}}</p>
+	  <p class="text-textColor">Country detail</p>
   </div>
 </template>
 
 <script>
 	export default {
 		name: 'country-detail',
-		props: {
-			id: { required: true, type: String }
+
+		data: {
+			countryIso2: this.$route.params.id
 		}
 	}
 </script>

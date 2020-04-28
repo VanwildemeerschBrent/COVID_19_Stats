@@ -1,15 +1,16 @@
 <template>
-  <nav class="w-12 h-screen font-bold text-textColor navbar">
+  <nav class="w-12 h-screen font-bold border-r text-textColor navbar border-textColor">
     <p class="p-6 mb-20 text-2xl text-center uppercase">
       COVID-19
       <br />Stats
     </p>
-    <div
-      class="w-full h-auto p-4 font-bold text-center cursor-pointer"
-      @click="$router.push('/')"
-    >
+    <div class="w-full h-auto p-4 font-bold text-center cursor-pointer" @click="$router.push('/')">
       <c-home-icon class="mb-4 nav-icon" />
       <p class="mt-4">All</p>
+    </div>
+    <div class="w-full h-auto p-4 font-bold text-center cursor-pointer" @click="$router.push('/')">
+      <c-home-icon class="mb-4 nav-icon" />
+      <p class="mt-4">Today</p>
     </div>
     <div
       class="w-full h-auto p-4 font-bold text-center cursor-pointer"

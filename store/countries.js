@@ -3,13 +3,15 @@ import Axios from 'axios'
 const baseURL = 'https://api.covid19api.com/'
 
 export const state = () => ({
-  countries: []
+  countries: [],
+  countryData: []
 })
 
 export const mutations = {
   SET_COUNTRIES(state, payload) {
     state.countries = payload
-  }
+  },
+  SET_COUNTRYDATA(state, payload) {}
 }
 export const getters = {
   getCountries(state) {
@@ -29,5 +31,10 @@ export const actions = {
       .catch(err =>
         console.error('Something went wrong fetching the countries', err)
       )
+  },
+  getCountryDataSinceDayOne: ({ commit }, countryCode) => {
+    // return Axios.get(`${baseURL}dayone/country/${countryCode}"`).then({ data }=>{
+
+    // }
   }
 }
