@@ -6,12 +6,16 @@
     </p>
     <div
       class="w-full h-auto p-4 font-bold text-center cursor-pointer"
+      @click="$router.push('/')"
+    >
+      <c-home-icon class="mb-4 nav-icon" />
+      <p class="mt-4">All</p>
+    </div>
+    <div
+      class="w-full h-auto p-4 font-bold text-center cursor-pointer"
       @click="$router.push('/countries')"
     >
-      <c-home-icon class="mb-4 ml-auto mr-auto" />
-      <p class="mt-4">Home</p>
-    </div>
-    <div class="w-full h-auto p-4 font-bold text-center cursor-pointer">
+      <c-globe-icon class="mb-4 nav-icon" />
       <p class="mt-4">Countries</p>
     </div>
   </nav>
@@ -19,14 +23,21 @@
 
 <script>
 	import HomeIcon from '../assets/icons/HomeIcon'
+	import GlobeIcon from '../assets/icons/GlobeIcon'
 	export default {
 		name: 'navbar',
 
 		components: {
-			'c-home-icon': HomeIcon
+			'c-home-icon': HomeIcon,
+			'c-globe-icon': GlobeIcon
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	.nav-icon {
+		position: relative;
+		transform: translateX(-50%);
+		left: 50%;
+	}
 </style>
