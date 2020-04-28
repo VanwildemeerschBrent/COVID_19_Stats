@@ -4,26 +4,32 @@ const baseURL = 'https://api.covid19api.com/'
 
 export const state = () => ({
   countries: [],
-  countryData: []
+  countryData: {}
 })
 
 export const mutations = {
   SET_COUNTRIES(state, payload) {
     state.countries = payload
   },
-  SET_COUNTRYDATA(state, payload) {}
+  SET_COUNTRYDATA(state, payload) {
+    //add country to keyvalue pair
+    state.countryData[payload.country] = payload.data
+  }
 }
 export const getters = {
   getCountries(state) {
     return state.countries
   },
 
-  getCountry(state, ISO2) {
-    return state.countries.find(x => x.ISO2 == ISO2)
+  getCountry: state => iso2Code => {
+    return state.countries.find(x => x.ISO2 == iso2Code)
   }
 }
 export const actions = {
-  getAllCountries: ({ commit }) => {
+  getAllCountries: ({ commit, state }) => {
+    if (state.countries.length !== 0) return state.countries
+
+    // If state.countries === 0 -> fetch countries;
     return Axios.get(`${baseURL}/countries`)
       .then(({ data }) => {
         commit('SET_COUNTRIES', data)
@@ -32,9 +38,17 @@ export const actions = {
         console.error('Something went wrong fetching the countries', err)
       )
   },
-  getCountryDataSinceDayOne: ({ commit }, countryCode) => {
-    // return Axios.get(`${baseURL}dayone/country/${countryCode}"`).then({ data }=>{
+  getCountryDataSinceDayOne: ({ commit, state }, countryName) => {
+    if (state.hasOwnProperty(countryName)) return state[countryName]
 
-    // }
+    // Data is not available for this country -> fetch from api
+    return Axios.get(`${baseURL}dayone/country/${countryName}`)
+      .then(({ data }) => {
+        commit('SET_COUNTRYDATA', { country: countryName, data: data })
+        return data
+      })
+      .catch(err =>
+        console.error('Something went wrong fetching the countries', err)
+      )
   }
 }
