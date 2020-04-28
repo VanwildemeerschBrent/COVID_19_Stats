@@ -1,23 +1,25 @@
 <template>
-  <nav class="w-12 h-screen font-bold border-r text-textColor navbar border-textColor">
-    <p class="p-6 mb-20 text-2xl text-center uppercase">
-      COVID-19
-      <br />Stats
-    </p>
-    <div class="w-full h-auto p-4 font-bold text-center cursor-pointer" @click="$router.push('/')">
-      <c-home-icon class="mb-4 nav-icon" />
-      <p class="mt-4">All</p>
-    </div>
-    <div class="w-full h-auto p-4 font-bold text-center cursor-pointer" @click="$router.push('/')">
-      <c-home-icon class="mb-4 nav-icon" />
-      <p class="mt-4">Today</p>
+  <nav class="w-full font-bold text-textColor navbar">
+    <p class="relative float-left w-2/12 p-6 text-2xl text-center uppercase">COVID-19 Stats</p>
+    <div
+      class="relative float-left w-1/12 h-full p-4 mr-2 font-bold text-center cursor-pointer"
+      @click="$router.push('/')"
+    >
+      <p class="m-4">All</p>
     </div>
     <div
-      class="w-full h-auto p-4 font-bold text-center cursor-pointer"
-      @click="$router.push('/countries')"
+      class="relative float-left w-1/12 h-full p-4 mr-2 font-bold text-center cursor-pointer"
+      @click="$router.push('/today')"
+      :class="{'border-b border-textColor':$route.fullPath.includes('/today')}"
     >
-      <c-globe-icon class="mb-4 nav-icon" />
-      <p class="mt-4">Countries</p>
+      <p class="m-4">Today</p>
+    </div>
+    <div
+      class="relative float-left w-1/12 h-full p-4 font-bold text-center cursor-pointer"
+      @click="$router.push('/countries')"
+      :class="{'border-b border-textColor':$route.fullPath.includes('/countries')}"
+    >
+      <p class="m-4">Countries</p>
     </div>
   </nav>
 </template>

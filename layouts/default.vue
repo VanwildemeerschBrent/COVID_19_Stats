@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap w-screen h-screen overflow-hidden bg-backgroundColor">
-    <c-navbar class="w-1/9" />
-    <nuxt class="p-3 w-8/9" />
+    <c-navbar class="w-full h-auto" />
+    <nuxt class="w-full h-auto p-3" />
   </div>
 </template>
 

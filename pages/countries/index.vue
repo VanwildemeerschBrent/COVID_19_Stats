@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen overflow-hidden country-overview bg-backgroundColor">
+  <div class="w-screen h-screen p-6 overflow-hidden country-overview bg-backgroundColor">
     <c-countries-list v-if="isAppVisible" />
   </div>
 </template>
