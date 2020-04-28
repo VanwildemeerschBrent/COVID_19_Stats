@@ -1,9 +1,8 @@
 <template>
-  <div class="countries-list w-full overflow-x-hidden overflow-y-hidden">
-    <div class="countries-list-search w-full h-12 bg-transparent flex items-center">
-      <label class="block text-gray-700 text-sm font-bold mb-2 mr-3" for="username">Search country</label>
+  <div class="w-full overflow-x-hidden overflow-y-hidden countries-list">
+    <div class="w-full h-auto pt-4 pb-4 text-center bg-transparent countries-list-search">
       <input
-        class="shadow appearance-none border rounded w-8/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="w-8/12 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none bg-backgroundColor border-textColor focus:outline-none"
         id="username"
         type="text"
         placeholder="Country name or country code"
@@ -14,13 +13,13 @@
       v-for="(country,index) in filteredCountries"
       :key="index"
       @click="$router.push('/countries/'+country.ISO2)"
-      class="countries-list__country w-1/8 float-left relative flex flex-row items-center cursor-pointer"
+      class="relative flex flex-row items-center float-left cursor-pointer countries-list__country w-1/8"
     >
       <img
-        class="country__flag w-1/3 relative float-left"
+        class="relative float-left w-1/3 country__flag"
         :src="'https://www.countryflags.io/'+country.ISO2+'/flat/64.png'"
       />
-      <p class="w-2/3 relative float-right text-center text-white">{{country.Country}}</p>
+      <p class="relative float-right w-2/3 text-center text-white">{{country.Country}}</p>
     </div>/
   </div>
 </template>

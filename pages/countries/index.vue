@@ -1,11 +1,11 @@
 <template>
-  <div class="country-overview w-screen h-screen overflow-hidden bg-backgroundColor">
+  <div class="w-screen h-screen overflow-hidden country-overview bg-backgroundColor">
     <c-countries-list v-if="isAppVisible" />
   </div>
 </template>
 
 <script>
-	import CountriesList from '@/components/CountriesList'
+	import CountriesList from '@/components/countries/CountriesList'
 	export default {
 		name: 'country-overview',
 
