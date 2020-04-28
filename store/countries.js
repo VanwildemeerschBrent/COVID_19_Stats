@@ -39,7 +39,8 @@ export const actions = {
       )
   },
   getCountryDataSinceDayOne: ({ commit, state }, countryName) => {
-    if (state.hasOwnProperty(countryName)) return state[countryName]
+    if (state.countries.length === 0) this.getAllCountries()
+    if (state.countryData.hasOwnProperty(countryName)) return state[countryName]
 
     // Data is not available for this country -> fetch from api
     return Axios.get(`${baseURL}dayone/country/${countryName}`)
