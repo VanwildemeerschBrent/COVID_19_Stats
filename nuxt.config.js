@@ -1,4 +1,4 @@
-module.exports = {
+gitmodule.exports = {
   mode: 'universal',
   /*
    ** Headers of the page
