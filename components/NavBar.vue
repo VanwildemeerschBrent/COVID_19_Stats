@@ -2,13 +2,14 @@
   <nav class="w-full font-bold text-textColor navbar">
     <p class="relative float-left w-2/12 p-6 text-2xl text-center uppercase">COVID-19 Stats</p>
     <div
-      class="relative float-left w-1/12 h-full p-4 mr-2 font-bold text-center cursor-pointer"
+      class="relative float-left w-1/12 p-4 mr-2 font-bold text-center cursor-pointer"
+      :class="{'border-b border-textColor':$route.fullPath ==='/'}"
       @click="$router.push('/')"
     >
       <p class="m-4">All</p>
     </div>
     <div
-      class="relative float-left w-1/12 h-full p-4 mr-2 font-bold text-center cursor-pointer"
+      class="relative float-left w-1/12 p-4 mr-2 font-bold text-center cursor-pointer"
       @click="$router.push('/today')"
       :class="{'border-b border-textColor':$route.fullPath.includes('/today')}"
     >

@@ -9,10 +9,14 @@
         v-model="searchInput"
       />
     </div>
-    <div class="w-full h-full overflow-x-hidden overflow-y-scroll">
+    <transition-group
+      name="flip-list"
+      tag="div"
+      class="w-full h-full overflow-x-hidden overflow-y-scroll"
+    >
       <div
-        v-for="(country,index) in filteredCountries"
-        :key="index"
+        v-for="country in filteredCountries"
+        :key="country"
         @click="$router.push('/countries/'+country.ISO2)"
         class="relative flex flex-row items-center float-left cursor-pointer countries-list__country w-1/8"
       >
@@ -20,9 +24,9 @@
           class="relative float-left w-1/3 country__flag"
           :src="'https://www.countryflags.io/'+country.ISO2+'/flat/64.png'"
         />
-        <p class="relative float-right w-2/3 text-center text-white">{{country.Country}}</p>
+        <p class="relative float-right w-2/3 text-center text-white">{{country.name}}</p>
       </div>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -37,12 +41,9 @@
 				searchInput: null
 			}
 		},
-		created() {
-			let countries = JSON.parse(
-				JSON.stringify(this.$store.getters['countries/getCountries'])
-			)
-			this.countries = this.sortCountries(countries)
-			this.filteredCountries = this.countries
+
+		mounted() {
+			this.getCountries()
 		},
 
 		watch: {
@@ -57,10 +58,24 @@
 		},
 
 		methods: {
+			getCountries() {
+				this.$store
+					.dispatch('countries/getAllCountries')
+					.then(response => {
+						this.countries = this.sortCountries(response)
+						this.filteredCountries = this.countries
+					})
+					.catch(error =>
+						console.error(
+							'Something went wrong fetching the latest results',
+							error
+						)
+					)
+			},
 			sortCountries(arr) {
 				return arr.sort((a, b) => {
-					if (a.Country.toLowerCase() > b.Country.toLowerCase()) return 1
-					if (b.Country.toLowerCase() > a.Country.toLowerCase()) return -1
+					if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+					if (b.name.toLowerCase() > a.name.toLowerCase()) return -1
 					return 0
 				})
 			},
@@ -80,5 +95,9 @@
 
 	.countries-list__country:hover {
 		opacity: 1;
+	}
+
+	.flip-list-move {
+		transition: transform 1s;
 	}
 </style>

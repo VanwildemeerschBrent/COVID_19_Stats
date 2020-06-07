@@ -28,11 +28,12 @@ export const getters = {
 export const actions = {
   getAllCountries: ({ commit, state }) => {
     if (state.countries.length !== 0) return state.countries
-
     // If state.countries === 0 -> fetch countries;
-    return Axios.get(`${baseURL}/countries`)
+    return Axios.get(`https://restcountries.eu/rest/v2/all`)
       .then(({ data }) => {
+        debugger
         commit('SET_COUNTRIES', data)
+        return data
       })
       .catch(err =>
         console.error('Something went wrong fetching the countries', err)
@@ -43,7 +44,7 @@ export const actions = {
     if (state.countryData.hasOwnProperty(countryName)) return state[countryName]
 
     // Data is not available for this country -> fetch from api
-    return Axios.get(`${baseURL}dayone/country/${countryName}`)
+    return Axios.get(`${baseURL}/dayone/country/${countryName}`)
       .then(({ data }) => {
         commit('SET_COUNTRYDATA', { country: countryName, data: data })
         return data
