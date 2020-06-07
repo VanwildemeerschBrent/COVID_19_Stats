@@ -21,8 +21,8 @@ export const getters = {
     return state.countries
   },
 
-  getCountry: state => iso2Code => {
-    return state.countries.find(x => x.ISO2 == iso2Code)
+  getCountry: state => alpha2Code => {
+    return state.countries.find(x => x.alpha2Code == alpha2Code)
   }
 }
 export const actions = {

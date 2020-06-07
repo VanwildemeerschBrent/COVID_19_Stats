@@ -2,7 +2,7 @@
   <div class="w-screen h-screen p-6 overflow-hidden stats-global bg-background text-textColor">
     <p class="text-6xl text-center">Global stats</p>
 
-    <div class="mt-12 align-middle country-detail__today">
+    <div class="mt-12 align-middle global-stats">
       <div class="relative float-left w-1/3">
         <p class="text-3xl text-center">Confirmed cases</p>
         <p class="text-6xl text-center" v-if="globalStats">{{globalStats.total_cases}}</p>
@@ -16,6 +16,7 @@
         <p class="text-6xl text-center" v-if="globalStats">{{globalStats.total_deaths}}</p>
       </div>
     </div>
+    <div class="mt-12 align-middle global-stats-chart"></div>
   </div>
 </template>
 
