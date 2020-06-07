@@ -31,7 +31,6 @@ export const actions = {
     // If state.countries === 0 -> fetch countries;
     return Axios.get(`https://restcountries.eu/rest/v2/all`)
       .then(({ data }) => {
-        debugger
         commit('SET_COUNTRIES', data)
         return data
       })

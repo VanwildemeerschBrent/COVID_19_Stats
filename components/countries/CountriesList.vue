@@ -16,13 +16,13 @@
     >
       <div
         v-for="country in filteredCountries"
-        :key="country"
-        @click="$router.push('/countries/'+country.ISO2)"
+        :key="country.alpha2Code"
+        @click="$router.push('/countries/'+country.alpha2Code)"
         class="relative flex flex-row items-center float-left cursor-pointer countries-list__country w-1/8"
       >
         <img
           class="relative float-left w-1/3 country__flag"
-          :src="'https://www.countryflags.io/'+country.ISO2+'/flat/64.png'"
+          :src="'https://www.countryflags.io/'+country.alpha2Code+'/flat/64.png'"
         />
         <p class="relative float-right w-2/3 text-center text-white">{{country.name}}</p>
       </div>
@@ -51,8 +51,8 @@
 				let searchInputLC = this.searchInput.toLowerCase()
 				this.filteredCountries = this.countries.filter(
 					x =>
-						x.Country.toLowerCase().includes(searchInputLC) ||
-						x.ISO2.toLowerCase().includes(searchInputLC)
+						x.name.toLowerCase().includes(searchInputLC) ||
+						x.alpha2Code.toLowerCase().includes(searchInputLC)
 				)
 			}
 		},
@@ -62,7 +62,7 @@
 				this.$store
 					.dispatch('countries/getAllCountries')
 					.then(response => {
-						this.countries = this.sortCountries(response)
+						this.countries = response
 						this.filteredCountries = this.countries
 					})
 					.catch(error =>
@@ -72,14 +72,6 @@
 						)
 					)
 			},
-			sortCountries(arr) {
-				return arr.sort((a, b) => {
-					if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
-					if (b.name.toLowerCase() > a.name.toLowerCase()) return -1
-					return 0
-				})
-			},
-
 			getCountryFlag(countryCode) {
 				return findFlagUrlByIso2Code(countryCode)
 			}
