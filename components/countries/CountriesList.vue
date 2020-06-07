@@ -12,7 +12,7 @@
     <transition-group
       name="flip-list"
       tag="div"
-      class="w-full h-full overflow-x-hidden overflow-y-scroll"
+      class="inline-block w-full h-full overflow-x-hidden overflow-y-scroll"
     >
       <div
         v-for="country in filteredCountries"
@@ -71,9 +71,6 @@
 							error
 						)
 					)
-			},
-			getCountryFlag(countryCode) {
-				return findFlagUrlByIso2Code(countryCode)
 			}
 		}
 	}
@@ -90,6 +87,6 @@
 	}
 
 	.flip-list-move {
-		transition: transform 1s;
+		transition: transform 0.6s;
 	}
 </style>
