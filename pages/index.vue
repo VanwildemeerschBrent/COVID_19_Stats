@@ -1,5 +1,7 @@
 <template>
   <div class="w-screen h-screen p-6 overflow-hidden stats-global bg-background text-textColor">
+    <p class="text-6xl text-center">Global stats</p>
+
     <div class="mt-12 align-middle country-detail__today">
       <div class="relative float-left w-1/3">
         <p class="text-3xl text-center">Confirmed cases</p>
