@@ -38,6 +38,7 @@ export const actions = {
         console.error('Something went wrong fetching the countries', err)
       )
   },
+
   getCountryDataSinceDayOne: ({ commit, state }, countryName) => {
     if (state.countries.length === 0) this.getAllCountries()
     if (state.countryData.hasOwnProperty(countryName)) return state[countryName]

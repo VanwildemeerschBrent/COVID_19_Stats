@@ -1,16 +1,16 @@
 <template>
   <div
-    class="w-screen h-screen p-6 overflow-hidden country-detail stats-today bg-backgroundColor text-textColor"
+    class="w-screen h-screen p-6 overflow-hidden country-detail bg-backgroundColor text-textColor"
   >
     <div class="ml-10 cursor-pointer text-textColor" @click="$router.push('/countries')">
       <c-arrow-left />
     </div>
     <div class="w-8/12 mb-4 ml-auto mr-auto text-6xl text-center text-textColor" v-if="countryData">
-      <span>{{countryData.name}}</span>
+      <span>{{country.name}}</span>
       <span class="float-left countryFlag">
         <img
           class="float-left w-12 country__flag"
-          :src="'https://www.countryflags.io/'+countryData.alpha2Code+'/flat/64.png'"
+          :src="'https://www.countryflags.io/'+this.iso2Code+'/flat/64.png'"
         />
       </span>
     </div>
@@ -52,6 +52,10 @@
 		mounted() {
 			this.iso2Code = this.$route.params.id
 
+			this.$store.dispatch('countries/getAllCountries').then(() => {
+				this.country = this.$store.getters['countries/getCountry'](this.iso2Code)
+				console.log(this.country)
+			})
 			this.$store
 				.dispatch('global/getCountryStatistics', this.iso2Code)
 				.then(response => {
@@ -61,10 +65,17 @@
 
 		computed: {
 			getConfirmedCases() {
-				console.log(this.countryData.data.timelineitems[0])
-				return this.countryData.data.timelineitems[0].reduce(
-					(sum, current) => (sum += current.total_cases)
-				)
+				if (this.countryData.data.hasOwnProperty('timelineItems')) {
+					let count
+
+					return Object.keys(this.countryData.data.timelineitems[0]).forEach(
+						key => {
+							console.log()
+						}
+					)
+				} else {
+					;('No data available')
+				}
 			}
 		}
 	}
