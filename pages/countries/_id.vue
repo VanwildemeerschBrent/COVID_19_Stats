@@ -14,7 +14,7 @@
         />
       </span>
     </div>
-
+    <!-- <p>No data available for {{country.name}}</p> -->
     <div class="mt-4 country-detail__today">
       <div class="inline-block w-full">
         <div class="relative float-left w-1/3">
@@ -60,6 +60,7 @@
 				iso2Code: null,
 				country: null,
 				countryData: null,
+				isDataAvailable: null,
 				lastAvailableDate: null
 			}
 		},
@@ -74,7 +75,6 @@
 			this.$store
 				.dispatch('global/getCountryStatistics', this.iso2Code)
 				.then(response => {
-					console.log(response)
 					this.countryData = response.data
 				})
 		},
@@ -88,7 +88,7 @@
 							: this.getLatestAvailableDate()
 					].total_cases
 				} else {
-					;('No data available')
+					return 'No data available'
 				}
 			},
 			getRecoveredCases() {
@@ -99,7 +99,7 @@
 							: this.getLatestAvailableDate()
 					].total_recoveries
 				} else {
-					;('No data available')
+					return 'No data available'
 				}
 			},
 
@@ -111,7 +111,7 @@
 							: this.getLatestAvailableDate()
 					].total_deaths
 				} else {
-					;('No data available')
+					return 'No data available'
 				}
 			},
 
@@ -123,7 +123,7 @@
 							: this.getLatestAvailableDate()
 					].new_daily_cases
 				} else {
-					;('No data available')
+					return 'No data available'
 				}
 			},
 			getDeathsToday() {
@@ -134,7 +134,7 @@
 							: this.getLatestAvailableDate()
 					].new_daily_deaths
 				} else {
-					;('No data available')
+					return 'No data available'
 				}
 			}
 		},
