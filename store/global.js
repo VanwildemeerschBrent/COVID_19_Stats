@@ -40,7 +40,8 @@ export const actions = {
       )
   },
   getCountryStatistics: ({ commit, state }, isoCode) => {
-    if (state.countryStats.find(x => x.iso === isoCode)) return this
+    if (state.countryStats.find(x => x.iso === isoCode))
+      return state.countryStats.find(x => x.iso === isoCode)
 
     return Axios.get(`${baseURL}countryTimeline=${isoCode}`).then(data => {
       commit('SET_COUNTRY_STATS', { iso: isoCode, data: data })

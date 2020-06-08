@@ -7,26 +7,40 @@
     </div>
     <div class="w-8/12 mb-4 ml-auto mr-auto text-6xl text-center text-textColor" v-if="countryData">
       <span>{{country.name}}</span>
-      <span class="float-left countryFlag">
+      <span class="countryFlag">
         <img
-          class="float-left w-12 country__flag"
+          class="inline country__flag"
           :src="'https://www.countryflags.io/'+this.iso2Code+'/flat/64.png'"
         />
       </span>
     </div>
 
-    <div class="country-detail__today">
+    <div class="mt-4 country-detail__today">
+      <div class="inline-block w-full">
+        <div class="relative float-left w-1/3">
+          <p class="text-3xl text-center">New cases</p>
+          <p class="text-6xl text-center" v-if="countryData">{{getConfirmedCasesToday}}</p>
+        </div>
+        <div class="relative float-left w-1/3">&nbsp;</div>
+        <div class="relative float-left w-1/3">
+          <p class="text-3xl text-center">New deaths</p>
+          <p class="text-6xl text-center" v-if="countryData">{{getDeathsToday}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="inline-block w-full country-detail__total">
       <div class="relative float-left w-1/3">
-        <p class="text-3xl text-center">Confirmed cases</p>
+        <p class="text-3xl text-center">Total confirmed cases</p>
         <p class="text-6xl text-center" v-if="countryData">{{getConfirmedCases}}</p>
       </div>
       <div class="relative float-left w-1/3">
-        <p class="text-3xl text-center">Recovered</p>
-        <p class="text-6xl text-center" v-if="countryData">{{}}</p>
+        <p class="text-3xl text-center">Total recovered</p>
+        <p class="text-6xl text-center" v-if="countryData">{{getRecoveredCases}}</p>
       </div>
       <div class="relative float-left w-1/3">
-        <p class="text-3xl text-center">Deaths</p>
-        <p class="text-6xl text-center" v-if="countryData">{{}}</p>
+        <p class="text-3xl text-center">Total Deaths</p>
+        <p class="text-6xl text-center" v-if="countryData">{{getDeaths}}</p>
       </div>
     </div>
   </div>
@@ -45,7 +59,8 @@
 			return {
 				iso2Code: null,
 				country: null,
-				countryData: null
+				countryData: null,
+				lastAvailableDate: null
 			}
 		},
 
@@ -54,28 +69,83 @@
 
 			this.$store.dispatch('countries/getAllCountries').then(() => {
 				this.country = this.$store.getters['countries/getCountry'](this.iso2Code)
-				console.log(this.country)
 			})
+
 			this.$store
 				.dispatch('global/getCountryStatistics', this.iso2Code)
 				.then(response => {
+					console.log(response)
 					this.countryData = response.data
 				})
 		},
 
 		computed: {
 			getConfirmedCases() {
-				if (this.countryData.data.hasOwnProperty('timelineItems')) {
-					let count
-
-					return Object.keys(this.countryData.data.timelineitems[0]).forEach(
-						key => {
-							console.log()
-						}
-					)
+				if (this.countryData.data.hasOwnProperty('timelineitems')) {
+					return this.countryData.data.timelineitems[0][
+						this.lastAvailableDate
+							? this.lastAvailableDate
+							: this.getLatestAvailableDate()
+					].total_cases
 				} else {
 					;('No data available')
 				}
+			},
+			getRecoveredCases() {
+				if (this.countryData.data.hasOwnProperty('timelineitems')) {
+					return this.countryData.data.timelineitems[0][
+						this.lastAvailableDate
+							? this.lastAvailableDate
+							: this.getLatestAvailableDate()
+					].total_recoveries
+				} else {
+					;('No data available')
+				}
+			},
+
+			getDeaths() {
+				if (this.countryData.data.hasOwnProperty('timelineitems')) {
+					return this.countryData.data.timelineitems[0][
+						this.lastAvailableDate
+							? this.lastAvailableDate
+							: this.getLatestAvailableDate()
+					].total_deaths
+				} else {
+					;('No data available')
+				}
+			},
+
+			getConfirmedCasesToday() {
+				if (this.countryData.data.hasOwnProperty('timelineitems')) {
+					return this.countryData.data.timelineitems[0][
+						this.lastAvailableDate
+							? this.lastAvailableDate
+							: this.getLatestAvailableDate()
+					].new_daily_cases
+				} else {
+					;('No data available')
+				}
+			},
+			getDeathsToday() {
+				if (this.countryData.data.hasOwnProperty('timelineitems')) {
+					return this.countryData.data.timelineitems[0][
+						this.lastAvailableDate
+							? this.lastAvailableDate
+							: this.getLatestAvailableDate()
+					].new_daily_deaths
+				} else {
+					;('No data available')
+				}
+			}
+		},
+
+		methods: {
+			getLatestAvailableDate() {
+				this.lastAvailableDate = Object.keys(
+					this.countryData.data.timelineitems[0]
+				)[Object.keys(this.countryData.data.timelineitems[0]).length - 2]
+
+				return this.lastAvailableDate
 			}
 		}
 	}
